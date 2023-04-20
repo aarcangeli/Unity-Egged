@@ -105,6 +105,7 @@ MonoBehaviour:
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
+  isFired: 0
 --- !u!114 &8616685848737228371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +135,12 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 4135013735270702863}
   TopClamp: 89
   BottomClamp: -89
+  HandAnimator: {fileID: 0}
+  EggPrototype: {fileID: 0}
+  EggVelocity: 20
+  EggAngularVelocity: 10
+  EggSpawnDelay: 0.2
+  EggSpawnerTimeout: 0.4
 --- !u!114 &1978471637655604388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,8 +155,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pushLayers:
     serializedVersion: 2
-    m_Bits: 0
-  canPush: 0
+    m_Bits: 1024
+  canPush: 1
   strength: 1.1
 --- !u!114 &8616685848737228376
 MonoBehaviour:

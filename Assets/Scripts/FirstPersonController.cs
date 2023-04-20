@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
-#endif
 
 namespace StarterAssets
 {
 	[RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 	[RequireComponent(typeof(PlayerInput))]
-#endif
 	public class FirstPersonController : MonoBehaviour
 	{
 		[Header("Player")] [Tooltip("Move speed of the character in m/s")]
@@ -60,6 +56,12 @@ namespace StarterAssets
 
 		public Animator HandAnimator;
 
+		[Header("Egg")] public GameObject EggPrototype;
+		public float EggVelocity = 10f;
+		public float EggAngularVelocity = 10f;
+		public float EggSpawnDelay = 0.2f;
+		public float EggSpawnerTimeout = 0.2f;
+
 		// cinemachine
 		private float _cinemachineTargetPitch;
 
@@ -73,28 +75,19 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
-
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		private PlayerInput _playerInput;
-#endif
 		private CharacterController _controller;
 		private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
-		
+		private bool _isFiring;
+
 		private static readonly int PThrow = Animator.StringToHash("p_throw");
 
 		private const float _threshold = 0.01f;
 
 		private bool IsCurrentDeviceMouse
 		{
-			get
-			{
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-				return _playerInput.currentControlScheme == "KeyboardMouse";
-#else
-				return false;
-#endif
-			}
+			get { return _playerInput.currentControlScheme == "KeyboardMouse"; }
 		}
 
 		private void Awake()
@@ -110,11 +103,7 @@ namespace StarterAssets
 		{
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 			_playerInput = GetComponent<PlayerInput>();
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
 
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
@@ -126,12 +115,35 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
-			if (_input.isFired)
+			CheckFire();
+		}
+
+		private void CheckFire()
+		{
+			if (_input.isFired && !_isFiring)
 			{
-				print("Fired");
+				_isFiring = true;
 				HandAnimator.SetTrigger(PThrow);
-				_input.isFired = false;
+				HandAnimator.Play("Throw");
+				Invoke(nameof(SpawnEgg), EggSpawnDelay);
+				Invoke(nameof(EnableEggSpawner), EggSpawnerTimeout);
 			}
+			_input.isFired = false;
+		}
+
+		private void SpawnEgg()
+		{
+			var projectile = Instantiate(EggPrototype);
+			projectile.transform.position = EggPrototype.transform.position;
+			projectile.transform.rotation = EggPrototype.transform.rotation;
+			projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * EggVelocity;
+			projectile.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * EggAngularVelocity;
+			projectile.SetActive(true);
+		}
+
+		private void EnableEggSpawner()
+		{
+			_isFiring = false;
 		}
 
 		private void LateUpdate()

@@ -1,7 +1,5 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
-#endif
 
 namespace StarterAssets
 {
@@ -19,7 +17,6 @@ namespace StarterAssets
 
 		public bool isFired = false;
 
-#if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -47,8 +44,6 @@ namespace StarterAssets
 		{
 			isFired = value.isPressed;
 		}
-#endif
-
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
