@@ -97,6 +97,9 @@ namespace StarterAssets
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
+			
+			// Ensure the egg is not active
+			EggPrototype.SetActive(false);
 		}
 
 		private void Start()
@@ -124,7 +127,6 @@ namespace StarterAssets
 			{
 				_isFiring = true;
 				HandAnimator.SetTrigger(PThrow);
-				HandAnimator.Play("Throw");
 				Invoke(nameof(SpawnEgg), EggSpawnDelay);
 				Invoke(nameof(EnableEggSpawner), EggSpawnerTimeout);
 			}

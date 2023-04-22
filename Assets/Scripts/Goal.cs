@@ -25,7 +25,6 @@ public class Goal : MonoBehaviour
 		delta.y = 0;
 		delta.Normalize();
 		var rotation = Quaternion.LookRotation(delta);
-		print(rotation.eulerAngles);
 
 		var rotationEulerAngles = RotatableFlag.transform.rotation.eulerAngles;
 		RotatableFlag.transform.rotation = rotation;
