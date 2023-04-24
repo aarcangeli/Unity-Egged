@@ -9,16 +9,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 771268850990213870}
-  - component: {fileID: 7990131248205610040}
   - component: {fileID: 144442048}
   - component: {fileID: 144442049}
+  - component: {fileID: 6960529136201897139}
+  - component: {fileID: 177268061670978814}
   m_Layer: 11
   m_Name: EggProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &771268850990213870
 Transform:
   m_ObjectHideFlags: 0
@@ -35,20 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7990131248205610040
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2745279929612615179}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.04
-  m_Height: 0.13
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &144442048
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -80,6 +67,34 @@ MonoBehaviour:
   ExplodeOnLayers:
     serializedVersion: 2
     m_Bits: 0
+  BrokenEggPrefab: {fileID: 0}
+  DecalPrefab: {fileID: 0}
+--- !u!135 &6960529136201897139
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745279929612615179}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.043725625
+  m_Center: {x: 0, y: -0.013739899, z: 0}
+--- !u!135 &177268061670978814
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2745279929612615179}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.030378878
+  m_Center: {x: 0, y: 0.031204462, z: 0}
 --- !u!1 &5535525881954430744
 GameObject:
   m_ObjectHideFlags: 0

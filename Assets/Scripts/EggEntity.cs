@@ -1,15 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EggEntity : MonoBehaviour
 {
 	public LayerMask ExplodeOnLayers;
 	public GameObject BrokenEggPrefab;
-	public float EggBreakTime = 5f;
+	public GameObject DecalPrefab;
+
 	private bool _isBroken;
+
+	private EggManager _eggManager;
+
+	private void Start()
+	{
+		_eggManager = FindObjectOfType<EggManager>();
+	}
 
 	private void OnCollisionEnter(Collision other)
 	{
@@ -18,7 +28,26 @@ public class EggEntity : MonoBehaviour
 		if ((bodyLayerMask & ExplodeOnLayers.value) == 0) return;
 
 		// Send a message to the other object
-		other.gameObject.SendMessage("OnEggCollision", SendMessageOptions.DontRequireReceiver);
+		var enemy = other.gameObject.GetComponentInParent<Enemy>();
+		if (enemy != null)
+		{
+			enemy.KillEnemy();
+		}
+
+		// Draw a decal
+		if (!_isBroken)
+		{
+			foreach (ContactPoint contact in other.contacts)
+			{
+				if (contact.thisCollider.gameObject == gameObject || contact.otherCollider.gameObject == gameObject)
+				{
+					var decal = Instantiate(DecalPrefab, contact.point, Quaternion.LookRotation(contact.normal));
+					decal.transform.SetParent(other.transform);
+					decal.SetActive(true);
+					// Destroy(decal, 10);
+				}
+			}
+		}
 
 		Break();
 	}
@@ -39,8 +68,8 @@ public class EggEntity : MonoBehaviour
 		{
 			rb.velocity = velocity;
 		}
-		
+
 		// Destroy broken egg after a while
-		Destroy(body, EggBreakTime);
+		_eggManager.AddEgg(body);
 	}
 }

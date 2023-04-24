@@ -192,7 +192,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 53aa01dcf0e2248469aeb358205c94ec, type: 3}
+  - {fileID: 7953645014239450895, guid: 53aa01dcf0e2248469aeb358205c94ec, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,7 +238,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6615420958710058341}
   - component: {fileID: 6615420958710058340}
-  m_Layer: 12
+  - component: {fileID: 7794244654887276775}
+  m_Layer: 0
   m_Name: Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,3 +276,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotatableFlag: {fileID: 2006980910656554223}
+--- !u!136 &7794244654887276775
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6615420958710058346}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 3.5559468
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.709815, z: 0}

@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +13,6 @@ namespace StarterAssets
 
 		[Header("Movement Settings")] public bool analogMovement;
 
-		[Header("Mouse Cursor Settings")] public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
 		public bool isFired = false;
@@ -67,12 +67,7 @@ namespace StarterAssets
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
-		}
-
-		private void SetCursorState(bool newState)
-		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			Cursor.lockState = GameManager.Instance.IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
 		}
 	}
 }

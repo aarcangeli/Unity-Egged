@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -26,7 +28,14 @@ public class Goal : MonoBehaviour
 		delta.Normalize();
 		var rotation = Quaternion.LookRotation(delta);
 
-		var rotationEulerAngles = RotatableFlag.transform.rotation.eulerAngles;
 		RotatableFlag.transform.rotation = rotation;
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject == _player)
+		{
+			GameManager.Instance.EndGame();
+		}
 	}
 }

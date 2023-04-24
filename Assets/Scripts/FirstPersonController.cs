@@ -1,5 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Threading;
+using Managers;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 namespace StarterAssets
 {
@@ -62,6 +66,9 @@ namespace StarterAssets
 		public float EggSpawnDelay = 0.2f;
 		public float EggSpawnerTimeout = 0.2f;
 
+		[Tooltip("Extra pitch when firing in degrees")]
+		public float ExtraFirePitch = 0;
+
 		// cinemachine
 		private float _cinemachineTargetPitch;
 
@@ -97,7 +104,7 @@ namespace StarterAssets
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
-			
+
 			// Ensure the egg is not active
 			EggPrototype.SetActive(false);
 		}
@@ -123,13 +130,14 @@ namespace StarterAssets
 
 		private void CheckFire()
 		{
-			if (_input.isFired && !_isFiring)
+			if (_input.isFired && !_isFiring && !GameManager.Instance.IsPaused)
 			{
 				_isFiring = true;
 				HandAnimator.SetTrigger(PThrow);
 				Invoke(nameof(SpawnEgg), EggSpawnDelay);
 				Invoke(nameof(EnableEggSpawner), EggSpawnerTimeout);
 			}
+
 			_input.isFired = false;
 		}
 
@@ -138,7 +146,7 @@ namespace StarterAssets
 			var projectile = Instantiate(EggPrototype);
 			projectile.transform.position = EggPrototype.transform.position;
 			projectile.transform.rotation = EggPrototype.transform.rotation;
-			projectile.GetComponent<Rigidbody>().velocity = projectile.transform.forward * EggVelocity;
+			projectile.GetComponent<Rigidbody>().velocity = GetThrowDirection() * EggVelocity;
 			projectile.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * EggAngularVelocity;
 			projectile.SetActive(true);
 		}
@@ -165,7 +173,7 @@ namespace StarterAssets
 		private void CameraRotation()
 		{
 			// if there is an input
-			if (_input.look.sqrMagnitude >= _threshold)
+			if (_input.look.sqrMagnitude >= _threshold && !GameManager.Instance.IsPaused)
 			{
 				//Don't multiply mouse input by Time.deltaTime
 				float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
@@ -284,6 +292,22 @@ namespace StarterAssets
 			if (lfAngle < -360f) lfAngle += 360f;
 			if (lfAngle > 360f) lfAngle -= 360f;
 			return Mathf.Clamp(lfAngle, lfMin, lfMax);
+		}
+
+		private Vector3 GetThrowDirection()
+		{
+			var rotation = EggPrototype.transform.rotation.eulerAngles;
+
+			// Change the pitch
+			// normalize between -180 and 180
+			rotation.x -= ExtraFirePitch;
+
+			return Quaternion.Euler(rotation) * Vector3.forward;
+		}
+
+		private void OnDrawGizmos()
+		{
+			DrawArrow.ForDebug(EggPrototype.transform.position, GetThrowDirection(), Color.red);
 		}
 
 		private void OnDrawGizmosSelected()
