@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -8,11 +10,14 @@ namespace Managers
 	public class EnemyManager : MonoBehaviour
 	{
 		// ReSharper disable once FieldCanBeMadeReadOnly.Local (We need to make it serializable)
-		private List<Enemy> _enemies = new();
+		private List<Enemy> _enemies;
 
-		public void RegisterEnemy(Enemy enemy)
+		private Gate[] _gates;
+
+		private void Start()
 		{
-			_enemies.Add(enemy);
+			_enemies = FindObjectsOfType<Enemy>().ToList();
+			_gates = FindObjectsOfType<Gate>();
 		}
 
 		public void OnEnemyKilled(Enemy enemy)
@@ -25,7 +30,7 @@ namespace Managers
 
 		private void OpenGates()
 		{
-			foreach (var gate in FindObjectsOfType<Gate>())
+			foreach (var gate in _gates)
 			{
 				gate.OpenGate();
 			}

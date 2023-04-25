@@ -97,11 +97,6 @@ namespace Managers
 			Application.Quit();
 		}
 
-		public void RegisterEnemy(Enemy enemy)
-		{
-			_enemyManager.RegisterEnemy(enemy);
-		}
-
 		public void OnEnemyKilled(Enemy enemy)
 		{
 			_enemyManager.OnEnemyKilled(enemy);

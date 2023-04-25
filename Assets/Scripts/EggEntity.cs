@@ -31,7 +31,7 @@ public class EggEntity : MonoBehaviour
 		var enemy = other.gameObject.GetComponentInParent<Enemy>();
 		if (enemy != null)
 		{
-			enemy.KillEnemy();
+			enemy.OnEggHit();
 		}
 
 		// Draw a decal

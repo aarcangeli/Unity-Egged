@@ -145,6 +145,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotateToPlayer: 1
+  KillableByEgg: 1
+  KillableByFall: 0
+  FallAngle: 0
 --- !u!95 &987288491144027908
 Animator:
   serializedVersion: 5

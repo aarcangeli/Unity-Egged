@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 5039898438425614481}
   - component: {fileID: 5039898438425614480}
   - component: {fileID: 5039898438425614483}
-  - component: {fileID: 5039898438425614482}
+  - component: {fileID: 4184634924772239}
   m_Layer: 14
   m_Name: Enemy2
   m_TagString: Untagged
@@ -325,7 +325,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5039898438425614482
+--- !u!114 &4184634924772239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,3 +338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RotateToPlayer: 1
+  KillableByEgg: 0
+  KillableByFall: 1
+  FallAngle: 40

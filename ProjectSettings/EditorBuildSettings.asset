@@ -9,11 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: 450dfabd75a2ce8468ec1779689e49d5
   - enabled: 1
-    path: Assets/Scenes/Levels/Level1.unity
+    path: Assets/Scenes/Levels/Intro.unity
     guid: 74ca0112d21e8004f916a38f77c9b668
   - enabled: 1
-    path: Assets/Scenes/Levels/Level2-SquidGame.unity
+    path: Assets/Scenes/Levels/Bowling.unity
+    guid: 61833b14201811849bc01e7fa5b91624
+  - enabled: 1
+    path: Assets/Scenes/Levels/SquidGame.unity
     guid: 705312188eeb5434c81681e22152b95c
+  - enabled: 1
+    path: Assets/Scenes/Levels/Parkour1.unity
+    guid: 5e1c2c8e18f3c754da061b2f3f412f54
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7,
       type: 2}
