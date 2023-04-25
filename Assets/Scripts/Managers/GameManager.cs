@@ -130,5 +130,11 @@ namespace Managers
 				PauseMenu.SetActive(false);
 			}
 		}
+
+		public void GameOver(string customMessage)
+		{
+			// TODO
+			EndGame();
+		}
 	}
 }
