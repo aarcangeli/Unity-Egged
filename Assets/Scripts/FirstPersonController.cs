@@ -89,9 +89,15 @@ namespace StarterAssets
 		private bool _isFiring;
 
 		private static readonly int PThrow = Animator.StringToHash("p_throw");
+		private static readonly int IsThereEggs = Animator.StringToHash("IsThereEggs");
+
+		private int _totalEggs;
 
 		private const float _threshold = 0.01f;
 
+		public delegate void EggChangeEvent(int newCount);
+		public EggChangeEvent OnEggsChanged;
+		
 		private bool IsCurrentDeviceMouse
 		{
 			get { return _playerInput.currentControlScheme == "KeyboardMouse"; }
@@ -130,12 +136,15 @@ namespace StarterAssets
 
 		private void CheckFire()
 		{
-			if (_input.isFired && !_isFiring && !GameManager.Instance.IsPaused)
+			if (_input.isFired && !_isFiring && !GameManager.Instance.IsPaused && _totalEggs > 0)
 			{
 				_isFiring = true;
+				_totalEggs--;
 				HandAnimator.SetTrigger(PThrow);
 				Invoke(nameof(SpawnEgg), EggSpawnDelay);
 				Invoke(nameof(EnableEggSpawner), EggSpawnerTimeout);
+				UpdateHandAnimation();
+				OnEggsChanged?.Invoke(_totalEggs);
 			}
 
 			_input.isFired = false;
@@ -323,5 +332,19 @@ namespace StarterAssets
 				new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z),
 				GroundedRadius);
 		}
+
+		public void AddEggs(int eggs)
+		{
+			_totalEggs += eggs;
+			UpdateHandAnimation();
+			OnEggsChanged?.Invoke(_totalEggs);
+		}
+
+		private void UpdateHandAnimation()
+		{
+			HandAnimator.SetBool(IsThereEggs, _totalEggs > 0);
+		}
+		
+		public int Eggs => _totalEggs;
 	}
 }
