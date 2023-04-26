@@ -16,6 +16,12 @@ namespace Managers
 
 		private void Start()
 		{
+			GameManager.Instance.SnapshotManager.OnRestoreSnapshot += RestoreEnemies;
+			RestoreEnemies();
+		}
+
+		private void RestoreEnemies()
+		{
 			_enemies = FindObjectsOfType<Enemy>().ToList();
 			_gates = FindObjectsOfType<Gate>();
 		}

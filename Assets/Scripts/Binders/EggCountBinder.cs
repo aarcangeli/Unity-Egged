@@ -1,3 +1,4 @@
+using Managers;
 using StarterAssets;
 using TMPro;
 using UnityEngine;
@@ -6,20 +7,28 @@ namespace Binders
 {
 	public class EggCountBinder : MonoBehaviour
 	{
-		private FirstPersonController _player;
 		private TMP_Text _text;
+
+		private int _lastEggs = -1;
 
 		void Start()
 		{
-			_player = FindObjectOfType<FirstPersonController>();
-			_player.OnEggsChanged += OnEggsChanged;
 			_text = GetComponent<TMP_Text>();
-			OnEggsChanged(_player.Eggs);
 		}
 
-		private void OnEggsChanged(int newcount)
+		void Update()
 		{
-			_text.text = "x" + newcount.ToString();
+			var eggs = GameManager.Instance.Player.Eggs;
+			if (eggs != _lastEggs)
+			{
+				OnEggsChanged(eggs);
+			}
+		}
+
+		private void OnEggsChanged(int eggs)
+		{
+			_text.text = "x" + eggs;
+			_lastEggs = eggs;
 		}
 	}
 }

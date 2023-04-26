@@ -262,6 +262,7 @@ GameObject:
   - component: {fileID: 5039898438425614480}
   - component: {fileID: 5039898438425614483}
   - component: {fileID: 4184634924772239}
+  - component: {fileID: 6898018627167859078}
   m_Layer: 14
   m_Name: Enemy2
   m_TagString: Untagged
@@ -341,3 +342,15 @@ MonoBehaviour:
   KillableByEgg: 0
   KillableByFall: 1
   FallAngle: 40
+--- !u!114 &6898018627167859078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5039898438425614479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4932428c47f946f09b5fbb4e92078c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

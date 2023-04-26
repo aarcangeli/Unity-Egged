@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Managers;
 using UnityEngine;
 
@@ -15,22 +13,22 @@ public class Enemy : MonoBehaviour
 	public float FallAngle;
 
 	private Animator _animator;
-	private GameObject _player;
 	private bool _isDead;
-	
+
 	private static readonly int IsDead = Animator.StringToHash("isDead");
 
 	void Start()
 	{
 		_animator = GetComponent<Animator>();
-		_player = GameObject.FindWithTag("Player");
 	}
 
 	protected void Update()
 	{
 		if (RotateToPlayer && !_isDead)
 		{
-			transform.LookAt(_player.transform);
+			var lookPos = GameManager.Instance.Player.transform.position - transform.position;
+			lookPos.y = 0;
+			transform.rotation = Quaternion.LookRotation(lookPos);
 		}
 
 		if (KillableByFall && FallAngle > 0)
@@ -58,7 +56,7 @@ public class Enemy : MonoBehaviour
 		{
 			_isDead = true;
 			_animator.SetTrigger(IsDead);
-			GameManager.Instance.OnEnemyKilled(this);
+			GameManager.Instance.EnemyManager.OnEnemyKilled(this);
 		}
 	}
 

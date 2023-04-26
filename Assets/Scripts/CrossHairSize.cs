@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
@@ -11,12 +12,19 @@ public class CrossHairSize : MonoBehaviour
 	private Image _crossHair;
 
 	public float SizeMultiplier = 1.0f;
-	
+
 	private Camera _camera;
 
 	private void Start()
 	{
+		SnapshotManager.Instance.OnRestoreSnapshot += OnSetup;
+
 		_crossHair = GetComponent<Image>();
+		OnSetup();
+	}
+
+	private void OnSetup()
+	{
 		_camera = Camera.main;
 	}
 

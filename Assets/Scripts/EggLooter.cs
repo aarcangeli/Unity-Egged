@@ -9,15 +9,8 @@ public class EggLooter : MonoBehaviour
 {
 	public float speed = 1.0f;
 	public int eggs = 0;
-	private FirstPersonController _player;
 
 	private bool _isLooted = false;
-
-	// Start is called before the first frame update
-	void Start()
-	{
-		_player = FindObjectOfType<FirstPersonController>();
-	}
 
 	void Update()
 	{
@@ -32,7 +25,7 @@ public class EggLooter : MonoBehaviour
 		}
 
 		Destroy(gameObject);
-		_player.AddEggs(eggs);
+		GameManager.Instance.Player.AddEggs(eggs);
 		_isLooted = true;
 	}
 }

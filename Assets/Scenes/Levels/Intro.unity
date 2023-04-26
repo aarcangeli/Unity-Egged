@@ -1508,16 +1508,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1087688452}
     m_Modifications:
-    - target: {fileID: 2621151348876069090, guid: 297c78e5cc7b36040ba3283e40594e63,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2621151348876069090, guid: 297c78e5cc7b36040ba3283e40594e63,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4097524644652611872, guid: 297c78e5cc7b36040ba3283e40594e63,
         type: 3}
       propertyPath: m_Name
@@ -1576,16 +1566,6 @@ PrefabInstance:
     - target: {fileID: 4097524644652611875, guid: 297c78e5cc7b36040ba3283e40594e63,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
-        type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

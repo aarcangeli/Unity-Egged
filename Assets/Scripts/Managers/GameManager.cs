@@ -1,55 +1,80 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using StarterAssets;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
 
 namespace Managers
 {
 	[RequireComponent(typeof(EnemyManager))]
+	[RequireComponent(typeof(SnapshotManager))]
 	public class GameManager : MonoBehaviour
 	{
-		public List<Scene> Levels;
+		public TMP_Text PersistentTimeText;
 
 		[Header("Pause Menu")] public GameObject PauseMenu;
 
 		[Header("Stop Menu")] public GameObject StopMenu;
 		public TMP_Text TimeText;
 
+		[Header("Splash Menu")] public GameObject SplashMenu;
+
 		private float _startTime;
 
-		private EnemyManager _enemyManager;
+		public EnemyManager EnemyManager { get; private set; }
+		public SnapshotManager SnapshotManager { get; private set; }
 
-		private static GameManager m_Instance;
+		private static GameManager _instance;
+
+		FirstPersonController _player;
+
+		private bool _isPaused;
+		private bool _isWaitingAnyKey;
 
 		public static GameManager Instance
 		{
 			get
 			{
-				if (!m_Instance)
+				if (!_instance)
 				{
-					m_Instance = FindObjectOfType<GameManager>();
+					_instance = FindObjectOfType<GameManager>();
 				}
 
-				return m_Instance;
+				return _instance;
 			}
 		}
 
-		public bool IsPaused { get; private set; }
+		public bool IsPaused => _isPaused || _isWaitingAnyKey;
 
 		public bool IsStopped { get; private set; }
+
+		public FirstPersonController Player => _player;
 
 		// Start is called before the first frame update
 		void Awake()
 		{
+			_instance = this;
+			EnemyManager = GetComponent<EnemyManager>();
+			SnapshotManager = GetComponent<SnapshotManager>();
 			StartGame();
-			_enemyManager = GetComponent<EnemyManager>();
+
+			SnapshotManager.OnRestoreSnapshot += SetupPlayer;
+			SetupPlayer();
+		}
+
+		private void SetupPlayer()
+		{
+			_player = FindObjectOfType<FirstPersonController>();
 		}
 
 		private void OnDisable()
 		{
-			m_Instance = null;
+			_instance = null;
 		}
 
 		private void Update()
@@ -58,6 +83,14 @@ namespace Managers
 			{
 				SetPaused(!IsPaused);
 			}
+
+			var gameTime = Time.time - _startTime;
+			PersistentTimeText.text = TimeSpan.FromSeconds(gameTime).ToString("mm':'ss'.'ff");
+
+			if (_isWaitingAnyKey)
+			{
+				CheckSplashScreen();
+			}
 		}
 
 		// Update is called once per frame
@@ -65,11 +98,14 @@ namespace Managers
 		{
 			_startTime = Time.time;
 			Cursor.visible = false;
-			IsPaused = false;
+			_isPaused = false;
 			IsStopped = false;
 			StopMenu.SetActive(false);
 			PauseMenu.SetActive(false);
+			SplashMenu.SetActive(true);
 			Cursor.lockState = CursorLockMode.Locked;
+			_isWaitingAnyKey = true;
+			Time.timeScale = 0;
 		}
 
 		public void EndGame()
@@ -80,11 +116,23 @@ namespace Managers
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
 			StopMenu.SetActive(true);
-			IsPaused = true;
+			_isPaused = true;
 			IsStopped = true;
 		}
 
 		public void ResumeGame() => SetPaused(false);
+
+		public void RestartGame()
+		{
+			Time.timeScale = 1;
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+		}
+
+		public void LoadNextLevel()
+		{
+			Time.timeScale = 1;
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+		}
 
 		public void LoadMenu()
 		{
@@ -97,20 +145,15 @@ namespace Managers
 			Application.Quit();
 		}
 
-		public void OnEnemyKilled(Enemy enemy)
-		{
-			_enemyManager.OnEnemyKilled(enemy);
-		}
-
 		private void SetPaused(bool Paused)
 		{
-			if (IsStopped)
+			if (IsStopped || _isWaitingAnyKey)
 			{
 				return;
 			}
 
-			IsPaused = Paused;
-			if (IsPaused)
+			_isPaused = Paused;
+			if (_isPaused)
 			{
 				Time.timeScale = 0;
 				Cursor.visible = true;
@@ -126,10 +169,24 @@ namespace Managers
 			}
 		}
 
+		private void CheckSplashScreen()
+		{
+			var wasPressed = Keyboard.current?.anyKey.wasPressedThisFrame == true ||
+			                 Gamepad.current?.allControls.Any(x =>
+				                 x is ButtonControl { isPressed: true } && !x.synthetic) == true;
+			if (wasPressed)
+			{
+				_isWaitingAnyKey = false;
+				SplashMenu.SetActive(false);
+				Time.timeScale = 1;
+				Cursor.lockState = CursorLockMode.Locked;
+			}
+		}
+
 		public void GameOver(string customMessage)
 		{
-			// TODO
-			EndGame();
+			// todo
+			SnapshotManager.RestoreSnapshotAsync();
 		}
 	}
 }

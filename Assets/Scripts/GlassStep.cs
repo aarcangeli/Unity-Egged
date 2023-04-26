@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Managers;
 using StarterAssets;
 using UnityEngine;
 
@@ -11,16 +12,10 @@ public class GlassStep : MonoBehaviour
 	public float ExplosionForce;
 
 	private Collider _collider;
-	private FirstPersonController _player;
-
-	// Yes, really bad practice, but I'm lazy
-	public static float LastFallTime;
 
 	void Start()
 	{
 		_collider = GetComponentInChildren<Collider>();
-		_player = FindObjectOfType<FirstPersonController>();
-		LastFallTime = float.MinValue;
 		if (!IsReal)
 		{
 			_collider.isTrigger = true;
@@ -29,12 +24,10 @@ public class GlassStep : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject == _player.gameObject)
+		if (other.gameObject == GameManager.Instance.Player.gameObject || other.GetComponent<EggEntity>())
 		{
 			if (!IsReal)
 			{
-				LastFallTime = Time.time;
-				
 				var selfTransform = transform;
 				var frac = Instantiate(FakeGlassPrefab, selfTransform.position, selfTransform.rotation,
 					selfTransform.parent);
@@ -42,7 +35,6 @@ public class GlassStep : MonoBehaviour
 				foreach (var rb in frac.GetComponentsInChildren<Rigidbody>())
 				{
 					rb.AddExplosionForce(ExplosionForce, selfTransform.position, 10);
-					Destroy(rb.gameObject, 5);
 				}
 
 				Destroy(gameObject);

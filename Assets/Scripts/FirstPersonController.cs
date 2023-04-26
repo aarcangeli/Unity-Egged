@@ -70,7 +70,7 @@ namespace StarterAssets
 		public float ExtraFirePitch = 0;
 
 		// cinemachine
-		private float _cinemachineTargetPitch;
+		[SerializeField] private float _cinemachineTargetPitch;
 
 		// player
 		private float _speed;
@@ -96,8 +96,9 @@ namespace StarterAssets
 		private const float _threshold = 0.01f;
 
 		public delegate void EggChangeEvent(int newCount);
+
 		public EggChangeEvent OnEggsChanged;
-		
+
 		private bool IsCurrentDeviceMouse
 		{
 			get { return _playerInput.currentControlScheme == "KeyboardMouse"; }
@@ -106,10 +107,11 @@ namespace StarterAssets
 		private void Awake()
 		{
 			// get a reference to our main camera
-			if (_mainCamera == null)
-			{
-				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-			}
+			_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+			_controller = GetComponent<CharacterController>();
+			_input = GetComponent<StarterAssetsInputs>();
+			_playerInput = GetComponent<PlayerInput>();
 
 			// Ensure the egg is not active
 			EggPrototype.SetActive(false);
@@ -117,13 +119,24 @@ namespace StarterAssets
 
 		private void Start()
 		{
-			_controller = GetComponent<CharacterController>();
-			_input = GetComponent<StarterAssetsInputs>();
-			_playerInput = GetComponent<PlayerInput>();
-
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+		}
+
+		private void OnEnable()
+		{
+			SnapshotManager.Instance.OnRestoreSnapshot += RestoreSnapshot;
+		}
+
+		private void OnDisable()
+		{
+			SnapshotManager.Instance.OnRestoreSnapshot -= RestoreSnapshot;
+		}
+
+		private void RestoreSnapshot()
+		{
+			_input.Reset();
 		}
 
 		private void Update()
@@ -344,7 +357,7 @@ namespace StarterAssets
 		{
 			HandAnimator.SetBool(IsThereEggs, _totalEggs > 0);
 		}
-		
+
 		public int Eggs => _totalEggs;
 	}
 }

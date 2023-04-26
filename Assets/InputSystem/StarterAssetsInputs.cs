@@ -1,3 +1,4 @@
+using System;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -68,6 +69,14 @@ namespace StarterAssets
 		private void OnApplicationFocus(bool hasFocus)
 		{
 			Cursor.lockState = GameManager.Instance.IsPaused ? CursorLockMode.None : CursorLockMode.Locked;
+		}
+
+		public void Reset()
+		{
+			move = Vector2.zero;
+			look = Vector2.zero;
+			jump = false;
+			sprint = false;
 		}
 	}
 }

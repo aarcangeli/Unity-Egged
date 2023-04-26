@@ -109,6 +109,9 @@ GameObject:
   - component: {fileID: 987288491144027910}
   - component: {fileID: 987288491144027931}
   - component: {fileID: 987288491144027908}
+  - component: {fileID: 1020171602559533905}
+  - component: {fileID: 950524591}
+  - component: {fileID: 950524592}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -169,3 +172,43 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1020171602559533905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987288491144027905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4932428c47f946f09b5fbb4e92078c09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &950524591
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987288491144027905}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.068238, y: 2.9384923, z: 1.0350257}
+  m_Center: {x: 0, y: 1.3615258, z: 0}
+--- !u!114 &950524592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987288491144027905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c8fefa4ac3a694396f61d176245e72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CustomMessage: 
+  KillPlayer: 1
+  DestroyObjects: 0
