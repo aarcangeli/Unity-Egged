@@ -132,6 +132,7 @@ MonoBehaviour:
   IsReal: 0
   FakeGlassPrefab: {fileID: 965602399509574832, guid: ef14d11aea72ef44ab254b1118d4a7fa,
     type: 3}
+  ExplosionForce: 10
 --- !u!65 &5649960640035480831
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using StarterAssets;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.SceneManagement;
@@ -13,25 +11,36 @@ namespace Managers
 {
 	[RequireComponent(typeof(EnemyManager))]
 	[RequireComponent(typeof(SnapshotManager))]
+	[RequireComponent(typeof(ScoreManager))]
 	public class GameManager : MonoBehaviour
 	{
 		public TMP_Text PersistentTimeText;
+
+		public bool IsMenu;
 
 		[Header("Pause Menu")] public GameObject PauseMenu;
 
 		[Header("Stop Menu")] public GameObject StopMenu;
 		public TMP_Text TimeText;
+		public GameObject NextLevelButton;
+		public GameObject NewHighScorePanel;
+		public AudioSource WinSound;
 
 		[Header("Splash Menu")] public GameObject SplashMenu;
+		public TMP_Text HighScoreText;
+		public GameObject HighScorePanel;
+
+		public int FirstLevelIndex;
 
 		private float _startTime;
 
 		public EnemyManager EnemyManager { get; private set; }
 		public SnapshotManager SnapshotManager { get; private set; }
+		public ScoreManager ScoreManager { get; private set; }
 
 		private static GameManager _instance;
 
-		FirstPersonController _player;
+		private FirstPersonController _player;
 
 		private bool _isPaused;
 		private bool _isWaitingAnyKey;
@@ -49,7 +58,10 @@ namespace Managers
 			}
 		}
 
-		public bool IsPaused => _isPaused || _isWaitingAnyKey;
+		public int CurrentLevel => SceneManager.GetActiveScene().buildIndex - FirstLevelIndex + 1;
+		public int NumLevels => SceneManager.sceneCountInBuildSettings - FirstLevelIndex;
+
+		public bool IsPaused => _isPaused || _isWaitingAnyKey || IsMenu;
 
 		public bool IsStopped { get; private set; }
 
@@ -61,10 +73,25 @@ namespace Managers
 			_instance = this;
 			EnemyManager = GetComponent<EnemyManager>();
 			SnapshotManager = GetComponent<SnapshotManager>();
-			StartGame();
+			ScoreManager = GetComponent<ScoreManager>();
+			if (IsMenu)
+			{
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+			}
+			else
+			{
+				StartGame();
+			}
 
 			SnapshotManager.OnRestoreSnapshot += SetupPlayer;
+
 			SetupPlayer();
+
+			if (CurrentLevel == NumLevels)
+			{
+				NextLevelButton.SetActive(false);
+			}
 		}
 
 		private void SetupPlayer()
@@ -85,7 +112,7 @@ namespace Managers
 			}
 
 			var gameTime = Time.time - _startTime;
-			PersistentTimeText.text = TimeSpan.FromSeconds(gameTime).ToString("mm':'ss'.'ff");
+			PersistentTimeText.text = TimeToString(gameTime);
 
 			if (_isWaitingAnyKey)
 			{
@@ -102,22 +129,44 @@ namespace Managers
 			IsStopped = false;
 			StopMenu.SetActive(false);
 			PauseMenu.SetActive(false);
-			SplashMenu.SetActive(true);
 			Cursor.lockState = CursorLockMode.Locked;
 			_isWaitingAnyKey = true;
 			Time.timeScale = 0;
+
+			SplashMenu.SetActive(true);
+			var highScore = ScoreManager.GetHighScore(CurrentLevel);
+			HighScoreText.text = TimeToString(highScore);
+			HighScorePanel.SetActive(highScore > 0);
 		}
 
 		public void EndGame()
 		{
 			var gameTime = Time.time - _startTime;
-			TimeText.text = TimeSpan.FromSeconds(gameTime).ToString("mm':'ss'.'ff");
+			TimeText.text = TimeToString(gameTime);
 			Time.timeScale = 0;
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
 			StopMenu.SetActive(true);
 			_isPaused = true;
 			IsStopped = true;
+
+			// save high score
+			NewHighScorePanel.SetActive(false);
+			if (ScoreManager.IsBetterScore(gameTime, CurrentLevel))
+			{
+				NewHighScorePanel.SetActive(true);
+				ScoreManager.StoreHighScore(CurrentLevel, gameTime);
+			}
+
+			if (WinSound)
+			{
+				WinSound.Play();
+			}
+		}
+
+		private static string TimeToString(float gameTime)
+		{
+			return TimeSpan.FromSeconds(gameTime).ToString("mm':'ss'.'ff");
 		}
 
 		public void ResumeGame() => SetPaused(false);
@@ -142,7 +191,11 @@ namespace Managers
 
 		public void QuitGame()
 		{
-			Application.Quit();
+#if UNITY_EDITOR
+			UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
 		}
 
 		private void SetPaused(bool Paused)
@@ -174,13 +227,11 @@ namespace Managers
 			var wasPressed = Keyboard.current?.anyKey.wasPressedThisFrame == true ||
 			                 Gamepad.current?.allControls.Any(x =>
 				                 x is ButtonControl { isPressed: true } && !x.synthetic) == true;
-			if (wasPressed)
-			{
-				_isWaitingAnyKey = false;
-				SplashMenu.SetActive(false);
-				Time.timeScale = 1;
-				Cursor.lockState = CursorLockMode.Locked;
-			}
+			if (!wasPressed) return;
+			_isWaitingAnyKey = false;
+			SplashMenu.SetActive(false);
+			Time.timeScale = 1;
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 
 		public void GameOver(string customMessage)

@@ -12,10 +12,12 @@ public class GlassStep : MonoBehaviour
 	public float ExplosionForce;
 
 	private Collider _collider;
+	private RandomSoundsScript _sound;
 
 	void Start()
 	{
 		_collider = GetComponentInChildren<Collider>();
+		_sound = GetComponent<RandomSoundsScript>();
 		if (!IsReal)
 		{
 			_collider.isTrigger = true;
@@ -31,13 +33,18 @@ public class GlassStep : MonoBehaviour
 				var selfTransform = transform;
 				var frac = Instantiate(FakeGlassPrefab, selfTransform.position, selfTransform.rotation,
 					selfTransform.parent);
-				
+
 				foreach (var rb in frac.GetComponentsInChildren<Rigidbody>())
 				{
 					rb.AddExplosionForce(ExplosionForce, selfTransform.position, 10);
 				}
 
 				Destroy(gameObject);
+
+				if (_sound)
+				{
+					_sound.PlayRandomSound();
+				}
 			}
 		}
 	}

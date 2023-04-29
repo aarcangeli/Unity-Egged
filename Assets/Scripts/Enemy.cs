@@ -6,8 +6,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 	public bool RotateToPlayer = true;
-	public bool KillableByEgg = false;
-	public bool KillableByFall = false;
+	public bool KillableByEgg;
+	public bool KillableByFall;
+	public bool DisableColliderOnDeath;
+
+	public RandomSoundsScript DieSound;
 
 	[Tooltip("If the angle of the pin is greater than this, the enemy will die")]
 	public float FallAngle;
@@ -57,6 +60,19 @@ public class Enemy : MonoBehaviour
 			_isDead = true;
 			_animator.SetTrigger(IsDead);
 			GameManager.Instance.EnemyManager.OnEnemyKilled(this);
+			// Disable collider so that it cannot kill the player or catch eggs
+			if (DisableColliderOnDeath)
+			{
+				foreach (var it in GetComponentsInChildren<Collider>())
+				{
+					it.enabled = false;
+				}
+			}
+
+			if (DieSound)
+			{
+				DieSound.PlayRandomSound();
+			}
 		}
 	}
 

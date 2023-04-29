@@ -32,21 +32,28 @@ namespace Managers
 
 		private void Update()
 		{
-			if (Keyboard.current.pKey.wasPressedThisFrame)
+#if UNITY_EDITOR
+			if (Keyboard.current.f1Key.wasPressedThisFrame)
 			{
-				print("Taking snapshot");
 				TakeSnapshot();
 			}
 
-			if (Keyboard.current.oKey.wasPressedThisFrame)
+			if (Keyboard.current.f2Key.wasPressedThisFrame)
 			{
-				print("Restoring snapshot");
 				RestoreSnapshot();
 			}
+#endif
+		}
+
+		public void TakeSnapshotAsync()
+		{
+			Invoke(nameof(TakeSnapshot), 0.01f);
 		}
 
 		public void TakeSnapshot()
 		{
+			print("Taking snapshot");
+
 			var enemies = FindObjectsOfType<RestorableObject>();
 			var snapshot = new Snapshot();
 			foreach (var enemy in enemies)

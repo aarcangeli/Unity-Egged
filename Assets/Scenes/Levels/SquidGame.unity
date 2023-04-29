@@ -1791,16 +1791,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7688972249941701124, guid: 6f64b66496b527b4994fb1750c1200d9,
-        type: 3}
-      propertyPath: IsReal
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7688972249941701124, guid: 6f64b66496b527b4994fb1750c1200d9,
-        type: 3}
-      propertyPath: ExplosionForce
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f64b66496b527b4994fb1750c1200d9, type: 3}
 --- !u!4 &759537449 stripped
@@ -3589,8 +3579,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1574436588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: -1.7549}
-  m_LocalScale: {x: 10.641612, y: 0.3043217, z: 4.3450933}
+  m_LocalPosition: {x: 0, y: 0.05, z: -2.3583}
+  m_LocalScale: {x: 10.641612, y: 0.3043217, z: 5.551842}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -3749,7 +3739,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707481265}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 2.905}
+  m_LocalPosition: {x: 0, y: 0, z: 2.772}
   m_LocalScale: {x: 0.022748202, y: 0.022748202, z: 0.022748202}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3758,7 +3748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.113, y: 2.181}
+  m_AnchoredPosition: {x: -0.113, y: 2.126}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1707481267
@@ -3781,29 +3771,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Each stepping stone is made of one of two types of glass,
-
-    tempered
-    glass and normal glass
+  m_text: 'Each stepping stone is made from one of two types of glass, tempered glass
+    and normal glass
 
 
 
-    Tempered glass can withstand the weight of even
-    two players,
-
-    but normal glass will break with only one person.
+    Tempered glass can bear the weight of a person, but ordinary
+    glass will break at the slightest effort.
 
 
 
-    Players,
-    decide Identify which of the two tiles is made
-
-    of tempered glass and step
-    on it as you step
-
-    through 18 pairs of tiles.
-
-'
+    Players, decide Identify which
+    of the two tiles is composed of tempered glass and step on it as you walk through
+    18 pairs of tiles.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3866,7 +3846,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -74.524025, w: 0}
+  m_margin: {x: 0, y: 0, z: -58.447052, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -3957,7 +3937,7 @@ PrefabInstance:
     - target: {fileID: 4097524644652611875, guid: 297c78e5cc7b36040ba3283e40594e63,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.12
+      value: -3.01
       objectReference: {fileID: 0}
     - target: {fileID: 4097524644652611875, guid: 297c78e5cc7b36040ba3283e40594e63,
         type: 3}
@@ -3990,6 +3970,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4097524644652611875, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -36.676
+      objectReference: {fileID: 0}
+    - target: {fileID: 4971409083136304077, guid: 297c78e5cc7b36040ba3283e40594e63,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
@@ -4981,6 +4996,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5116522243717498220, guid: a96a3575543df7b4bafca506c9cc9ca2,
+        type: 3}
+      propertyPath: m_text
+      value: The Glass Bridge
       objectReference: {fileID: 0}
     - target: {fileID: 8847080619408716142, guid: a96a3575543df7b4bafca506c9cc9ca2,
         type: 3}

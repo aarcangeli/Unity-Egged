@@ -31,7 +31,7 @@ public class CrossHairSize : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (!_crossHair) return;
+		if (!_crossHair || !_camera) return;
 
 		var crossHairSprite = _crossHair.sprite;
 		if (!crossHairSprite) return;

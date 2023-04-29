@@ -7,6 +7,9 @@ public class EggEntity : MonoBehaviour
 	public GameObject BrokenEggPrefab;
 	public GameObject DecalPrefab;
 
+	public RandomSoundsScript Sound;
+	public LayerMask SoundOnLayers;
+
 	private bool _isBroken;
 
 	private EggManager _eggManager;
@@ -27,6 +30,13 @@ public class EggEntity : MonoBehaviour
 		if (enemy != null)
 		{
 			enemy.OnEggHit();
+		}
+
+		if (Utils.IsInLayerMask(other.gameObject, SoundOnLayers))
+		{
+			// Play sound
+			var sound = Instantiate(Sound, transform.position, transform.rotation);
+			sound.PlayRandomSound();
 		}
 
 		// Draw a decal

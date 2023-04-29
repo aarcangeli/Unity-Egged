@@ -81,7 +81,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 90
   m_StepOffset: 0.25
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
@@ -103,7 +103,6 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   analogMovement: 0
-  cursorLocked: 1
   cursorInputForLook: 1
   isFired: 0
 --- !u!114 &8616685848737228371
@@ -135,12 +134,16 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 4135013735270702863}
   TopClamp: 89
   BottomClamp: -89
+  KillVelocity: -15
   HandAnimator: {fileID: 0}
   EggPrototype: {fileID: 0}
   EggVelocity: 20
   EggAngularVelocity: 10
   EggSpawnDelay: 0.2
   EggSpawnerTimeout: 0.4
+  ExtraFirePitch: 0
+  _cinemachineTargetPitch: 0
+  TotalEggs: 0
 --- !u!114 &1978471637655604388
 MonoBehaviour:
   m_ObjectHideFlags: 0

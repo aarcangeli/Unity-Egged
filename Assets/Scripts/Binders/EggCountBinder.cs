@@ -18,10 +18,10 @@ namespace Binders
 
 		void Update()
 		{
-			var eggs = GameManager.Instance.Player.Eggs;
-			if (eggs != _lastEggs)
+			var player = GameManager.Instance.Player;
+			if (player && player.Eggs != _lastEggs)
 			{
-				OnEggsChanged(eggs);
+				OnEggsChanged(player.Eggs);
 			}
 		}
 

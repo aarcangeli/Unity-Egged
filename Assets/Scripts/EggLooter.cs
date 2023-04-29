@@ -9,6 +9,8 @@ public class EggLooter : MonoBehaviour
 {
 	public float speed = 1.0f;
 	public int eggs = 0;
+	public RandomSoundsScript Sound;
+	public bool SaveSnapshotOnLoot = true;
 
 	private bool _isLooted = false;
 
@@ -19,7 +21,7 @@ public class EggLooter : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (_isLooted)
+		if (_isLooted || !other.gameObject.CompareTag("Player"))
 		{
 			return;
 		}
@@ -27,5 +29,16 @@ public class EggLooter : MonoBehaviour
 		Destroy(gameObject);
 		GameManager.Instance.Player.AddEggs(eggs);
 		_isLooted = true;
+
+		// Play sound
+		var sound = Instantiate(Sound, transform.position, transform.rotation);
+		sound.PlayRandomSound();
+		Destroy(sound.gameObject, sound.Clip.clip.length + 2);
+
+		// Save the snapshot when the player hits the checkpoint
+		if (SaveSnapshotOnLoot)
+		{
+			SnapshotManager.Instance.TakeSnapshotAsync();
+		}
 	}
 }

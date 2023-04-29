@@ -3,6 +3,7 @@ using System.Threading;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace StarterAssets
@@ -35,6 +36,9 @@ namespace StarterAssets
 
 		[Tooltip("Time required to pass before entering the fall state. Useful for walking down stairs")]
 		public float FallTimeout = 0.15f;
+
+		[Tooltip("The player is automatically killed if the vertical velocity is over this value")]
+		public float KillVelocity;
 
 		[Header("Player Grounded")]
 		[Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
@@ -91,7 +95,7 @@ namespace StarterAssets
 		private static readonly int PThrow = Animator.StringToHash("p_throw");
 		private static readonly int IsThereEggs = Animator.StringToHash("IsThereEggs");
 
-		private int _totalEggs;
+		[SerializeField] private int TotalEggs;
 
 		private const float _threshold = 0.01f;
 
@@ -115,6 +119,8 @@ namespace StarterAssets
 
 			// Ensure the egg is not active
 			EggPrototype.SetActive(false);
+
+			UpdateHandAnimation();
 		}
 
 		private void Start()
@@ -149,15 +155,15 @@ namespace StarterAssets
 
 		private void CheckFire()
 		{
-			if (_input.isFired && !_isFiring && !GameManager.Instance.IsPaused && _totalEggs > 0)
+			if (_input.isFired && !_isFiring && !GameManager.Instance.IsPaused && TotalEggs > 0)
 			{
 				_isFiring = true;
-				_totalEggs--;
+				TotalEggs--;
 				HandAnimator.SetTrigger(PThrow);
 				Invoke(nameof(SpawnEgg), EggSpawnDelay);
 				Invoke(nameof(EnableEggSpawner), EggSpawnerTimeout);
 				UpdateHandAnimation();
-				OnEggsChanged?.Invoke(_totalEggs);
+				OnEggsChanged?.Invoke(TotalEggs);
 			}
 
 			_input.isFired = false;
@@ -307,6 +313,11 @@ namespace StarterAssets
 			{
 				_verticalVelocity += Gravity * Time.deltaTime;
 			}
+
+			if (KillVelocity > 0 && _verticalVelocity < -KillVelocity)
+			{
+				GameManager.Instance.GameOver("");
+			}
 		}
 
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
@@ -348,16 +359,16 @@ namespace StarterAssets
 
 		public void AddEggs(int eggs)
 		{
-			_totalEggs += eggs;
+			TotalEggs += eggs;
 			UpdateHandAnimation();
-			OnEggsChanged?.Invoke(_totalEggs);
+			OnEggsChanged?.Invoke(TotalEggs);
 		}
 
 		private void UpdateHandAnimation()
 		{
-			HandAnimator.SetBool(IsThereEggs, _totalEggs > 0);
+			HandAnimator.SetBool(IsThereEggs, TotalEggs > 0);
 		}
 
-		public int Eggs => _totalEggs;
+		public int Eggs => TotalEggs;
 	}
 }
