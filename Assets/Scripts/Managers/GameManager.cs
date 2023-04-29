@@ -23,6 +23,7 @@ namespace Managers
 		[Header("Stop Menu")] public GameObject StopMenu;
 		public TMP_Text TimeText;
 		public GameObject NextLevelButton;
+		public GameObject MenuButton;
 		public GameObject NewHighScorePanel;
 		public AudioSource WinSound;
 
@@ -91,6 +92,10 @@ namespace Managers
 			if (CurrentLevel == NumLevels)
 			{
 				NextLevelButton.SetActive(false);
+			}
+			else
+			{
+				MenuButton.SetActive(false);
 			}
 		}
 

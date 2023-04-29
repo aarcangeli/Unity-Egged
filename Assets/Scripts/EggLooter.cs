@@ -10,7 +10,7 @@ public class EggLooter : MonoBehaviour
 	public float speed = 1.0f;
 	public int eggs = 0;
 	public RandomSoundsScript Sound;
-	public bool SaveSnapshotOnLoot = true;
+	public bool SaveSnapshotOnLoot;
 
 	private bool _isLooted = false;
 
