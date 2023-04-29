@@ -68,9 +68,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ExplodeOnLayers:
     serializedVersion: 2
-    m_Bits: 0
-  BrokenEggPrefab: {fileID: 0}
-  DecalPrefab: {fileID: 0}
+    m_Bits: 4294967295
+  BrokenEggPrefab: {fileID: 6888665335828357189, guid: 4491f3a882bd7ea4b8cf52aed40ac712,
+    type: 3}
+  DecalPrefab: {fileID: 7408683863751511765, guid: a388640fc842afd4c997dd003ee27ced,
+    type: 3}
   Sound: {fileID: 5804869761879889543}
   SoundOnLayers:
     serializedVersion: 2

@@ -114,12 +114,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 117.978
       objectReference: {fileID: 0}
-    - target: {fileID: 5611853571939099907, guid: 2d3a85ecde41a8246a79669975912b74,
-        type: 3}
-      propertyPath: DecalPrefab
-      value: 
-      objectReference: {fileID: 7408683863751511765, guid: a388640fc842afd4c997dd003ee27ced,
-        type: 3}
     - target: {fileID: 7780107557043067337, guid: 2d3a85ecde41a8246a79669975912b74,
         type: 3}
       propertyPath: m_IsActive

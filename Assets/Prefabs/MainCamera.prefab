@@ -314,15 +314,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9005220659476430818}
     m_Modifications:
-    - target: {fileID: 144442049, guid: 7e49ee8655dda61428360e05422dea09, type: 3}
-      propertyPath: BrokenEggPrefab
-      value: 
-      objectReference: {fileID: 6888665335828357189, guid: 4491f3a882bd7ea4b8cf52aed40ac712,
-        type: 3}
-    - target: {fileID: 144442049, guid: 7e49ee8655dda61428360e05422dea09, type: 3}
-      propertyPath: ExplodeOnLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
     - target: {fileID: 771268850990213870, guid: 7e49ee8655dda61428360e05422dea09,
         type: 3}
       propertyPath: m_RootOrder

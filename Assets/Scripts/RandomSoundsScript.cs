@@ -19,6 +19,10 @@ public class RandomSoundsScript : MonoBehaviour
 		}
 
 		_audioClip = GetComponent<AudioSource>();
+		
+		// help reduce latency on first play
+		ChooseNextRandom();
+
 		if (PlayOnStart)
 		{
 			PlayRandomSound();
@@ -29,7 +33,12 @@ public class RandomSoundsScript : MonoBehaviour
 	{
 		if (AudioSources.Length == 0) return;
 
-		_audioClip.clip = AudioSources[Random.Range(0, AudioSources.Length)];
 		_audioClip.Play();
+		ChooseNextRandom();
+	}
+
+	private void ChooseNextRandom()
+	{
+		_audioClip.clip = AudioSources[Random.Range(0, AudioSources.Length)];
 	}
 }
