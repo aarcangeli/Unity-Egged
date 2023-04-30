@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
 		// After deserialization
 		if (IsEnemyDead)
 		{
+			GameManager.Instance.EnemyManager.OnEnemyKilled(this);
 			Destroy(gameObject);
 		}
 	}

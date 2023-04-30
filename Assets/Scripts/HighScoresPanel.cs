@@ -4,8 +4,9 @@ using Managers;
 using TMPro;
 using UnityEngine;
 
-public class HighScores : MonoBehaviour
+public class HighScoresPanel : MonoBehaviour
 {
+	public GameObject Panel;
 	public GameObject HighScorePrefab;
 
 	void Start()
@@ -24,7 +25,7 @@ public class HighScores : MonoBehaviour
 			total += highScore;
 		}
 		
-		AddRow("Tot. " + GameManager.TimeToString(total));
+		AddRow("Total. " + GameManager.TimeToString(total));
 
 		if (total == 0)
 		{
@@ -34,7 +35,7 @@ public class HighScores : MonoBehaviour
 
 	private void AddRow(string timeToString)
 	{
-		var obj = Instantiate(HighScorePrefab, transform);
+		var obj = Instantiate(HighScorePrefab, Panel.transform);
 		obj.GetComponent<TMP_Text>().SetText(timeToString);
 	}
 }

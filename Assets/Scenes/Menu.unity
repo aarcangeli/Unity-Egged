@@ -1587,6 +1587,7 @@ GameObject:
   - component: {fileID: 1355328894}
   - component: {fileID: 1355328896}
   - component: {fileID: 1355328895}
+  - component: {fileID: 1355328897}
   m_Layer: 5
   m_Name: Score Table
   m_TagString: Untagged
@@ -1654,6 +1655,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355328893}
   m_CullTransparentMesh: 1
+--- !u!114 &1355328897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355328893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34d6884180d5f8040b4eef57d9eb85ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Panel: {fileID: 1390898173}
+  HighScorePrefab: {fileID: 951276758}
 --- !u!1 &1390898173
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1681,6 @@ GameObject:
   - component: {fileID: 1390898177}
   - component: {fileID: 1390898175}
   - component: {fileID: 1390898178}
-  - component: {fileID: 1390898179}
   m_Layer: 5
   m_Name: HighScore
   m_TagString: Untagged
@@ -1743,19 +1757,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &1390898179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390898173}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d6884180d5f8040b4eef57d9eb85ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HighScorePrefab: {fileID: 951276758}
 --- !u!1 &1835652873
 GameObject:
   m_ObjectHideFlags: 0
