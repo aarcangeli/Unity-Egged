@@ -50,6 +50,7 @@ MonoBehaviour:
   speed: -40
   eggs: 4
   Sound: {fileID: 78286651968269616, guid: a29adc9a04095494e90c68ecd159d939, type: 3}
+  SaveSnapshotOnLoot: 0
 --- !u!135 &928189488
 SphereCollider:
   m_ObjectHideFlags: 0

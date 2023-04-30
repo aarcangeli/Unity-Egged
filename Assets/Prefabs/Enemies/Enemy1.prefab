@@ -111,7 +111,6 @@ GameObject:
   - component: {fileID: 987288491144027908}
   - component: {fileID: 1020171602559533905}
   - component: {fileID: 950524591}
-  - component: {fileID: 950524592}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Untagged
@@ -151,7 +150,7 @@ MonoBehaviour:
   RotateToPlayer: 1
   KillableByEgg: 1
   KillableByFall: 0
-  DisableColliderOnDeath: 1
+  LatentShow: 0
   DieSound: {fileID: 7763482054654601650}
   FallAngle: 0
 --- !u!95 &987288491144027908
@@ -200,21 +199,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.068238, y: 2.9384923, z: 1.0350257}
   m_Center: {x: 0, y: 1.3615258, z: 0}
---- !u!114 &950524592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 987288491144027905}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56c8fefa4ac3a694396f61d176245e72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CustomMessage: 
-  KillPlayer: 1
-  DestroyObjects: 0
 --- !u!1 &5754171932002459740
 GameObject:
   m_ObjectHideFlags: 0
@@ -304,7 +288,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

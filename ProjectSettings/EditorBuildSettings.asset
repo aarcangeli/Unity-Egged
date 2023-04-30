@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/NewMenu2.unity
+    path: Assets/Scenes/Menu.unity
     guid: acfb17c2e6cd8ba4eaac345d160e42c9
   - enabled: 1
-    path: Assets/Scenes/Levels/Intro.unity
+    path: Assets/Scenes/Levels/1-Tutorial.unity
     guid: 74ca0112d21e8004f916a38f77c9b668
+  - enabled: 1
+    path: Assets/Scenes/Levels/Clouds.unity
+    guid: f29ed29383a7c394a86650bbc7ff2347
   - enabled: 1
     path: Assets/Scenes/Levels/Bowling.unity
     guid: 61833b14201811849bc01e7fa5b91624

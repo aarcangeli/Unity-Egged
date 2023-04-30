@@ -7,7 +7,14 @@ namespace Managers
 {
 	public class SnapshotManager : MonoBehaviour
 	{
-		public static SnapshotManager Instance => GameManager.Instance.SnapshotManager;
+		public static SnapshotManager Instance
+		{
+			get
+			{
+				var gameManager = GameManager.Instance;
+				return gameManager ? gameManager.SnapshotManager : null;
+			}
+		}
 
 		public delegate void RestoreSnapshotDelegate();
 
@@ -22,6 +29,7 @@ namespace Managers
 			if (!_prefabWrapper)
 			{
 				_prefabWrapper = new GameObject("__prefabs");
+				_prefabWrapper.transform.parent = null;
 			}
 		}
 

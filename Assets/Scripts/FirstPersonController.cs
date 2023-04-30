@@ -63,6 +63,8 @@ namespace StarterAssets
 		public float BottomClamp = -90.0f;
 
 		public Animator HandAnimator;
+		
+		public AudioSource JumpSound;
 
 		[Header("Egg")] public GameObject EggPrototype;
 		public float EggVelocity = 10f;
@@ -137,7 +139,12 @@ namespace StarterAssets
 
 		private void OnDisable()
 		{
-			SnapshotManager.Instance.OnRestoreSnapshot -= RestoreSnapshot;
+			var snapshotManager = SnapshotManager.Instance;
+			// It may be null if the game is quitting
+			if (snapshotManager)
+			{
+				snapshotManager.OnRestoreSnapshot -= RestoreSnapshot;
+			}
 		}
 
 		private void RestoreSnapshot()
@@ -320,6 +327,17 @@ namespace StarterAssets
 			}
 		}
 
+		public void AutoJump(float verticalVelocity = 0)
+		{
+			_verticalVelocity = verticalVelocity;
+			JumpSound.Play();
+		}
+
+		public float CalculateVerticalVelocity(float jumpHeight)
+		{
+			return Mathf.Sqrt(jumpHeight * -2f * Gravity);
+		}
+
 		private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
 		{
 			if (lfAngle < -360f) lfAngle += 360f;
@@ -370,5 +388,6 @@ namespace StarterAssets
 		}
 
 		public int Eggs => TotalEggs;
+		public float VerticalVelocity => _verticalVelocity;
 	}
 }

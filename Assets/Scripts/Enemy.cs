@@ -1,6 +1,8 @@
 using System;
 using Managers;
+using StarterAssets;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
@@ -8,7 +10,7 @@ public class Enemy : MonoBehaviour
 	public bool RotateToPlayer = true;
 	public bool KillableByEgg;
 	public bool KillableByFall;
-	public bool DisableColliderOnDeath;
+	public bool LatentShow;
 
 	public RandomSoundsScript DieSound;
 
@@ -16,18 +18,26 @@ public class Enemy : MonoBehaviour
 	public float FallAngle;
 
 	private Animator _animator;
-	private bool _isDead;
+
+	[SerializeField] private bool IsEnemyDead;
 
 	private static readonly int IsDead = Animator.StringToHash("isDead");
 
 	void Start()
 	{
 		_animator = GetComponent<Animator>();
+		_animator.SetBool("LatentShow", LatentShow);
+
+		// After deserialization
+		if (IsEnemyDead)
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	protected void Update()
 	{
-		if (RotateToPlayer && !_isDead)
+		if (RotateToPlayer && !IsEnemyDead)
 		{
 			var lookPos = GameManager.Instance.Player.transform.position - transform.position;
 			lookPos.y = 0;
@@ -55,24 +65,15 @@ public class Enemy : MonoBehaviour
 
 	private void KillEnemy()
 	{
-		if (!_isDead)
-		{
-			_isDead = true;
-			_animator.SetTrigger(IsDead);
-			GameManager.Instance.EnemyManager.OnEnemyKilled(this);
-			// Disable collider so that it cannot kill the player or catch eggs
-			if (DisableColliderOnDeath)
-			{
-				foreach (var it in GetComponentsInChildren<Collider>())
-				{
-					it.enabled = false;
-				}
-			}
+		if (IsEnemyDead) return;
 
-			if (DieSound)
-			{
-				DieSound.PlayRandomSound();
-			}
+		IsEnemyDead = true;
+		_animator.SetTrigger(IsDead);
+		GameManager.Instance.EnemyManager.OnEnemyKilled(this);
+
+		if (DieSound)
+		{
+			DieSound.PlayRandomSound();
 		}
 	}
 
@@ -81,12 +82,27 @@ public class Enemy : MonoBehaviour
 		Destroy(gameObject);
 	}
 
+	public void ShowEnemy()
+	{
+		LatentShow = false;
+		_animator.SetBool("LatentShow", LatentShow);
+	}
+
 	private void OnCollisionEnter(Collision other)
 	{
 		if (other.gameObject.GetComponent<Enemy>())
 		{
 			// Disable rotation to player if we collide with another enemy
 			RotateToPlayer = false;
+		}
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		var player = other.GetComponent<FirstPersonController>();
+		if (player && !IsEnemyDead)
+		{
+			GameManager.Instance.GameOver("");
 		}
 	}
 }

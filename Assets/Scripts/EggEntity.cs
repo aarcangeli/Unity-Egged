@@ -36,6 +36,7 @@ public class EggEntity : MonoBehaviour
 		{
 			// Play sound
 			var sound = Instantiate(Sound, transform.position, transform.rotation);
+			sound.gameObject.SetActive(true);
 			sound.PlayRandomSound();
 		}
 

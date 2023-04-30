@@ -169,7 +169,7 @@ namespace Managers
 			}
 		}
 
-		private static string TimeToString(float gameTime)
+		public static string TimeToString(float gameTime)
 		{
 			return TimeSpan.FromSeconds(gameTime).ToString("mm':'ss'.'ff");
 		}

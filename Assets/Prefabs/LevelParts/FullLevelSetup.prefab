@@ -1926,7 +1926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142ab6aba65b4056abb7ca0e98970e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefabWrapper: {fileID: 7264972428318062167}
+  _prefabWrapper: {fileID: 0}
 --- !u!114 &5667872830432467982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3056,7 +3056,7 @@ PrefabInstance:
     - target: {fileID: 8764430561187720671, guid: 799c2df7481edfc438f0bbd50364a762,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: LoadNextLevel
+      value: LoadMenu
       objectReference: {fileID: 0}
     - target: {fileID: 8764430561187720671, guid: 799c2df7481edfc438f0bbd50364a762,
         type: 3}
@@ -3482,7 +3482,7 @@ PrefabInstance:
     - target: {fileID: 2381579792621625474, guid: 9569ffe66e6c18443b8aa6c912dfde0b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5048363725823068390, guid: 9569ffe66e6c18443b8aa6c912dfde0b,
         type: 3}
@@ -3587,6 +3587,11 @@ PrefabInstance:
     - target: {fileID: 5048363725823068390, guid: 9569ffe66e6c18443b8aa6c912dfde0b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8266450363717075847, guid: 9569ffe66e6c18443b8aa6c912dfde0b,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3794,7 +3799,7 @@ PrefabInstance:
     - target: {fileID: 2381579792621625474, guid: 9569ffe66e6c18443b8aa6c912dfde0b,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5048363725823068390, guid: 9569ffe66e6c18443b8aa6c912dfde0b,
         type: 3}
