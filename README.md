@@ -4,7 +4,7 @@
 
 This is the source code of my first released game, made for the Four Color Art Jam 2023.
 
-You can download it in the browser [here](https://aarcangeli.itch.io/egged)
+You can play it in the browser [here](https://aarcangeli.itch.io/egged)
 
 ## Screenshots
 
